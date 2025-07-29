@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discipulado TORRE FUERTE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        
+        .slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.2s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .group-tab {
+            transition: all 0.3s ease;
+        }
+
+        .group-tab.active {
+            background: linear-gradient(135deg, #3b82f6, #6366f1);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .main-nav {
+            transition: all 0.3s ease;
+        }
+
+        .main-nav.active {
+            background: linear-gradient(135deg, #3b82f6, #6366f1);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .cumulative-tab {
+            transition: all 0.3s ease;
+        }
+
+        .cumulative-tab.active {
+            background: linear-gradient(135deg, #3b82f6, #6366f1);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .cumulative-cell {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #e5e7eb;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .cumulative-cell:hover {
+            transform: scale(1.1);
+        }
+
+        .cumulative-cell.marked {
+            background: #10b981;
+            color: white;
+        }
+
+        .cumulative-cell.unmarked {
+            background: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Main Access Menu -->
+    <div id="mainMenu" class="max-w-md mx-auto bg-white shadow-xl rounded-t-3xl min-h-screen flex items-center justify-center">
+        <div class="text-center p-8 w-full">
+            <!-- Logo/Header -->
+            <div class="mb-8">
+                <div class="w-24 h-24 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h1 class="text-2xl font-bold text-gray-900 mb-2">DISCIPULADO</h1>
+                <h2 class="text-xl font-semibold text-blue-600 mb-1">TORRE FUERTE</h2>
+                <p class="text-sm text-gray-600">Sistema de Asistencia</p>
+            </div>
+
+            <!-- Access Buttons -->
+            <div class="space-y-4">
+                <button 
+                    onclick="requestMainAccess('docente')"
+                    class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 px-6 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                >
+                    <div class="flex items-center justify-center gap-3">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                        </svg>
+                        <div>
+                            <div class="font-bold text-lg">DOCENTES</div>
+                            <div class="text-sm opacity-90">Acceso por grupos</div>
+                        </div>
+                    </div>
+                </button>
+
+                <button 
+                    onclick="requestMainAccess('admin')"
+                    class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 px-6 rounded-xl hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                >
+                    <div class="flex items-center justify-center gap-3">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <div>
+                            <div class="font-bold text-lg">ADMINISTRADOR</div>
+                            <div class="text-sm opacity-90">Acceso completo al sistema</div>
+                        </div>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Footer -->
+            <div class="mt-8 text-xs text-gray-500">
+                <p>🔐 Sistema de acceso por roles</p>
+                <p class="mt-1">📱 Compatible con todos los dispositivos</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Group Selection Menu (for teachers) -->
+    <div id="groupSelectionMenu" class="max-w-md mx-auto bg-white shadow-xl rounded-t-3xl min-h-screen" style="display: none;">
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6 rounded-t-3xl">
+            <div class="flex items-center justify-between mb-4">
+                <h1 class="text-xl font-bold">Seleccionar Grupo</h1>
+                <div class="bg-white/20 rounded-full p-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                    </svg>
+                </div>
+            </div>
+            <p class="text-sm opacity-90">Elige el grupo de discipulado al que deseas acceder</p>
+        </div>
+
+        <div class="p-6">
+            <div class="space-y-4">
+                <button 
+                    onclick="selectTeacherGroup('madurez')"
+                    class="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-4 px-6 rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                >
+                    <div class="flex items-center justify-between">
+                        <div class="text-left">
+                            <div class="font-bold text-lg">Madurez Espiritual</div>
+                            <div class="text-sm opacity-90">13 estudiantes</div>
+                        </div>
+                        <div class="text-2xl">🌱</div>
+                    </div>
+                </button>
+
+                <button 
+                    onclick="selectTeacherGroup('prediscipulado')"
+                    class="w-full bg-gradient-to-r from-blue-500 to-cyan-600 text-white py-4 px-6 rounded-xl hover:from-blue-600 hover:to-cyan-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                >
+                    <div class="flex items-center justify-between">
+                        <div class="text-left">
+                            <div class="font-bold text-lg">Pre-Discipulado</div>
+                            <div class="text-sm opacity-90">22 estudiantes</div>
+                        </div>
+                        <div class="text-2xl">📚</div>
+                    </div>
+                </button>
+
+                <button 
+                    onclick="selectTeacherGroup('proverbios')"
+                    class="w-full bg-gradient-to-r from-yellow-500 to-orange-600 text-white py-4 px-6 rounded-xl hover:from-yellow-600 hover:to-orange-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                >
+                    <div class="flex items-center justify-between">
+                        <div class="text-left">
+                            <div class="font-bold text-lg">Proverbios de Salomón</div>
+                            <div class="text-sm opacity-90">30 estudiantes</div>
+                        </div>
+                        <div class="text-2xl">👑</div>
+                    </div>
+                </button>
+
+                <button 
+                    onclick="selectTeacherGroup('realidades')"
+                    class="w-full bg-gradient-to-r from-red-500 to-pink-600 text-white py-4 px-6 rounded-xl hover:from-red-600 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                >
+                    <div class="flex items-center justify-between">
+                        <div class="text-left">
+                            <div class="font-bold text-lg">Realidades de la Cruz</div>
+                            <div class="text-sm opacity-90">12 estudiantes</div>
+                        </div>
+                        <div class="text-2xl">✝️</div>
+                    </div>
+                </button>
+
+                <button 
+                    onclick="selectTeacherGroup('corintios')"
+                    class="w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white py-4 px-6 rounded-xl hover:from-purple-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                >
+                    <div class="flex items-center justify-between">
+                        <div class="text-left">
+                            <div class="font-bold text-lg">Corintios & Gracia</div>
+                            <div class="text-sm opacity-90">15 estudiantes</div>
+                        </div>
+                        <div class="text-2xl">💝</div>
+                    </div>
+                </button>
+
+                <button 
+                    onclick="selectTeacherGroup('enviados')"
+                    class="w-full bg-gradient-to-r from-teal-500 to-blue-600 text-white py-4 px-6 rounded-xl hover:from-teal-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                >
+                    <div class="flex items-center justify-between">
+                        <div class="text-left">
+                            <div class="font-bold text-lg">Enviados - Misiones</div>
+                            <div class="text-sm opacity-90">11 estudiantes</div>
+                        </div>
+                        <div class="text-2xl">🌍</div>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Back Button -->
+            <div class="mt-8">
+                <button 
+                    onclick="backToMainMenu()"
+                    class="w-full bg-gray-200 text-gray-800 py-3 px-6 rounded-xl hover:bg-gray-300 transition-all duration-300 font-medium"
+                >
+                    ← Volver al Menú Principal
+                </button>
+            </div>
+
+            <!-- Footer Info -->
+            <div class="mt-6 text-center text-xs text-gray-500">
+                <p>🔐 Cada grupo requiere su contraseña específica</p>
+                <p class="mt-1">📱 Acceso como DOCENTE autorizado</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Content -->
+    <div id="appContent" class="max-w-md mx-auto bg-white shadow-xl rounded-t-3xl min-h-screen" style="display: none;">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6 rounded-t-3xl">
+            <div class="flex items-center justify-between mb-4">
+                <h1 class="text-xl font-bold">Discipulado TORRE FUERTE</h1>
+                <div class="flex items-center gap-2">
+                    <button 
+                        onclick="backToMainMenu()"
+                        class="bg-white/20 rounded-full p-2 hover:bg-white/30 transition-colors"
+                        title="Volver al inicio"
+                    >
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                        </svg>
+                    </button>
+                    <div class="bg-white/20 rounded-full p-2">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center justify-between text-sm">
+                <span id="currentDate"></span>
+                <div class="flex items-center gap-2">
+                    <button 
+                        onclick="shareRoom()" 
+                        class="bg-white/20 px-3 py-1 rounded-full hover:bg-white/30 transition-colors text-xs font-medium"
+                        title="Compartir sala para sincronización"
+                    >
+                        🔗 Compartir
+                    </button>
+                    <span id="attendanceCount" class="bg-white/20 px-3 py-1 rounded-full">0 presentes</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Navigation -->
+        <div class="p-4 pb-2">
+            <div class="flex gap-1 bg-gray-100 p-1 rounded-xl mb-3">
+                <button onclick="switchMainView('attendance')" id="nav-attendance" class="main-nav flex-1 py-2 px-4 rounded-lg text-sm font-medium text-gray-600 active">
+                    📋 Asistencia
+                </button>
+                <button onclick="switchMainView('cumulative')" id="nav-cumulative" class="main-nav flex-1 py-2 px-4 rounded-lg text-sm font-medium text-gray-600">
+                    📊 Cuadros Acumulativos
+                </button>
+            </div>
+        </div>
+
+        <!-- Attendance View -->
+        <div id="attendanceView">
+            <!-- Group Tabs -->
+            <div class="px-4 pb-2">
+                <div class="flex gap-1 bg-gray-100 p-1 rounded-xl overflow-x-auto">
+                    <button onclick="switchGroup('madurez')" id="tab-madurez" class="group-tab flex-shrink-0 py-2 px-2 rounded-lg text-xs font-medium text-gray-600 active">
+                        Madurez
+                    </button>
+                    <button onclick="switchGroup('prediscipulado')" id="tab-prediscipulado" class="group-tab flex-shrink-0 py-2 px-2 rounded-lg text-xs font-medium text-gray-600">
+                        Pre-Disc.
+                    </button>
+                    <button onclick="switchGroup('proverbios')" id="tab-proverbios" class="group-tab flex-shrink-0 py-2 px-2 rounded-lg text-xs font-medium text-gray-600">
+                        Proverbios
+                    </button>
+                    <button onclick="switchGroup('realidades')" id="tab-realidades" class="group-tab flex-shrink-0 py-2 px-2 rounded-lg text-xs font-medium text-gray-600">
+                        Realidades
+                    </button>
+                    <button onclick="switchGroup('corintios')" id="tab-corintios" class="group-tab flex-shrink-0 py-2 px-2 rounded-lg text-xs font-medium text-gray-600">
+                        Corintios
+                    </button>
+                    <button onclick="switchGroup('enviados')" id="tab-enviados" class="group-tab flex-shrink-0 py-2 px-2 rounded-lg text-xs font-medium text-gray-600">
+                        Enviados
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="px-4 pb-4 grid grid-cols-4 gap-2">
+                <div class="bg-green-50 p-3 rounded-xl text-center">
+                    <div class="text-lg font-bold text-green-600" id="presentCount">0</div>
+                    <div class="text-xs text-green-600 font-medium">Presentes</div>
+                </div>
+                <div class="bg-red-50 p-3 rounded-xl text-center">
+                    <div class="text-lg font-bold text-red-600" id="absentCount">0</div>
+                    <div class="text-xs text-red-600 font-medium">Ausentes</div>
+                </div>
+                <div class="bg-blue-50 p-3 rounded-xl text-center">
+                    <div class="text-lg font-bold text-blue-600" id="totalCount">0</div>
+                    <div class="text-xs text-blue-600 font-medium">Total</div>
+                </div>
+                <div class="bg-purple-50 p-3 rounded-xl text-center">
+                    <div class="text-lg font-bold text-purple-600" id="percentageCount">0%</div>
+                    <div class="text-xs text-purple-600 font-medium">Asistencia</div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="px-4 pb-4 flex gap-2">
+                <button 
+                    onclick="markAllPresent()"
+                    class="flex-1 bg-green-500 text-white py-2 px-3 rounded-lg hover:bg-green-600 transition-colors text-xs font-medium"
+                >
+                    ✓ Todos
+                </button>
+                <button 
+                    onclick="markAllAbsent()"
+                    class="flex-1 bg-red-500 text-white py-2 px-3 rounded-lg hover:bg-red-600 transition-colors text-xs font-medium"
+                >
+                    ✗ Todos
+                </button>
+                <button 
+                    onclick="resetAttendance()"
+                    class="flex-1 bg-gray-500 text-white py-2 px-3 rounded-lg hover:bg-gray-600 transition-colors text-xs font-medium"
+                >
+                    🔄 Reset
+                </button>
+                <button 
+                    onclick="exportAttendance()"
+                    class="flex-1 bg-blue-500 text-white py-2 px-3 rounded-lg hover:bg-blue-600 transition-colors text-xs font-medium"
+                >
+                    📋 Exportar
+                </button>
+            </div>
+
+            <!-- Students List -->
+            <div class="px-4 pb-6">
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="text-lg font-semibold text-gray-800" id="groupTitle">Madurez Espiritual (13)</h2>
+                    <div class="text-sm text-gray-500" id="groupProgress">0/13</div>
+                </div>
+                <div id="studentsList" class="space-y-2">
+                    <!-- Students will be added here dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Cumulative View -->
+        <div id="cumulativeView" class="hidden">
+            <!-- Cumulative Group Tabs -->
+            <div class="px-4 pb-2">
+                <div class="flex gap-1 bg-gray-100 p-1 rounded-xl overflow-x-auto">
+                    <button onclick="switchCumulativeGroup('madurez')" id="cum-tab-madurez" class="cumulative-tab flex-shrink-0 py-2 px-2 rounded-lg text-xs font-medium text-gray-600 active">
+                        Madurez
+                    </button>
+                    <button onclick="switchCumulativeGroup('prediscipulado')" id="cum-tab-prediscipulado" class="cumulative-tab flex-shrink-0 py-2 px-2 rounded-lg text-xs font-medium text-gray-600">
+                        Pre-Disc.
+                    </button>
+                    <button onclick="switchCumulativeGroup('proverbios')" id="cum-tab-proverbios" class="cumulative-tab flex-shrink-0 py-2 px-2 rounded-lg text-xs font-medium text-gray-600">
+                        Proverbios
+                    </button>
+                    <button onclick="switchCumulativeGroup('realidades')" id="cum-tab-realidades" class="cumulative-tab flex-shrink-0 py-2 px-2 rounded-lg text-xs font-medium text-gray-600">
+                        Realidades
+                    </button>
+                    <button onclick="switchCumulativeGroup('corintios')" id="cum-tab-corintios" class="cumulative-tab flex-shrink-0 py-2 px-2 rounded-lg text-xs font-medium text-gray-600">
+                        Corintios
+                    </button>
+                    <button onclick="switchCumulativeGroup('enviados')" id="cum-tab-enviados" class="cumulative-tab flex-shrink-0 py-2 px-2 rounded-lg text-xs font-medium text-gray-600">
+                        Enviados
+                    </button>
+                </div>
+            </div>
+
+            <!-- Cumulative Chart -->
+            <div class="px-4 pb-6">
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="text-lg font-semibold text-gray-800" id="cumulativeGroupTitle">Cuadro Acumulativo - Madurez Espiritual</h2>
+                </div>
+                <div id="cumulativeChart" class="bg-white rounded-xl border border-gray-100 shadow-sm">
+                    <!-- Cumulative chart will be rendered here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Password Modal -->
+    <div id="passwordModal" class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Acceso Protegido</h3>
+                <p class="text-gray-600 text-sm" id="passwordPrompt">Ingresa la contraseña para acceder al grupo</p>
+            </div>
+            <div class="mb-6">
+                <input 
+                    type="password" 
+                    id="passwordInput" 
+                    placeholder="Contraseña"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                    onkeypress="handlePasswordKeyPress(event)"
+                >
+                <div id="passwordError" class="text-red-500 text-xs mt-2 hidden">Contraseña incorrecta</div>
+
+            </div>
+            <div class="flex gap-3">
+                <button 
+                    onclick="checkPassword()"
+                    class="flex-1 bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                >
+                    🔓 Ingresar
+                </button>
+                <button 
+                    onclick="cancelPasswordModal()"
+                    class="flex-1 bg-gray-200 text-gray-800 py-3 px-4 rounded-lg hover:bg-gray-300 transition-colors font-medium"
+                >
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Modal -->
+    <div id="exportModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full max-h-[80vh] overflow-hidden flex flex-col">
+            <h3 class="text-xl font-bold mb-4">Resumen de Asistencia</h3>
+            <div id="exportContent" class="mb-6 text-sm bg-gray-50 p-4 rounded-lg overflow-y-auto flex-1">
+                <!-- Export content will be generated here -->
+            </div>
+            <div class="flex gap-3">
+                <button 
+                    onclick="copyToClipboard()"
+                    class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                >
+                    📋 Copiar
+                </button>
+                <button 
+                    onclick="closeExportModal()"
+                    class="flex-1 bg-gray-200 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors font-medium"
+                >
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentGroup = 'madurez';
+        let currentCumulativeGroup = 'madurez';
+        let currentView = 'attendance';
+        let isAuthenticated = false;
+        let authenticatedGroups = new Set();
+        
+        const GROUP_PASSWORDS = {
+            madurez: 'MADUREZ47',
+            prediscipulado: 'PREDISCIPULADO83',
+            proverbios: 'PROVERBIOS29',
+            realidades: 'REALIDADES56',
+            corintios: 'CORINTIOS14',
+            enviados: 'ENVIADOS72'
+        };
+        
+        const studentGroups = {
+            madurez: [
+                { id: 12, name: "Aleyda Licona", phone: "33483536", present: null },
+                { id: 1, name: "Ángela Yadira Murillo Aguilar", phone: "98722692", present: null },
+                { id: 10, name: "Elvin Adonay Romero Romero", phone: "99370406", present: null },
+                { id: 3, name: "Emely Angelina Sarmiento Salinas", phone: "97147826", present: null },
+                { id: 5, name: "Jelin Marixa Soler Anariba", phone: "98228201", present: null },
+                { id: 8, name: "Jocsan Isai Morales Martinez", phone: "95111406", present: null },
+                { id: 4, name: "José Fernando Vasquez Orellana", phone: "89234775", present: null },
+                { id: 13, name: "Karen Alejandra Moradel Pinot", phone: "96225094", present: null },
+                { id: 6, name: "Karla Montoya", phone: "31423481", present: null },
+                { id: 11, name: "Merary Abigail Canales Enamorado", phone: "96806477", present: null },
+                { id: 2, name: "Merlin Yaneth Escalante Galindo", phone: "98645342", present: null },
+                { id: 7, name: "Milton Mauricio Matute Urbina", phone: "99711541", present: null },
+                { id: 9, name: "Wendy Johana Sanchez Galeas", phone: "31734843", present: null }
+            ],
+            prediscipulado: [
+                { id: 14, name: "Aaron Enamorado", phone: "99989647", present: null },
+                { id: 28, name: "Adiel Edgardo Perdomo Mejía", phone: "96354789", present: null },
+                { id: 18, name: "Ana Belén Martínez Pineda", phone: "96187315", present: null },
+                { id: 15, name: "Arnold Jahir Cruz Santos", phone: "92943148", present: null },
+                { id: 29, name: "Axel Isai Funes Santos", phone: "96134786", present: null },
+                { id: 30, name: "Carol Melissa Ramos Ramirez", phone: "99672485", present: null },
+                { id: 27, name: "Crisil Abigail Vallecilio Cabrera", phone: "98422664", present: null },
+                { id: 23, name: "Daniel Jafeth Ramirez Pineda", phone: "95792456", present: null },
+                { id: 25, name: "Dean Williams", phone: "33455060", present: null },
+                { id: 17, name: "Delmy Lizeth Espino Canales", phone: "93338775", present: null },
+                { id: 34, name: "Doris Yamileth Contreras Lara", phone: "96645557", present: null },
+                { id: 20, name: "Génesis Eunice Bonilla Yescas", phone: "98201803", present: null },
+                { id: 24, name: "Jancy Fabiola Hernández Alvarenga", phone: "96333126", present: null },
+                { id: 21, name: "Jorge Alberto Mejía Santos", phone: "88424701", present: null },
+                { id: 26, name: "José Manuel Ortega Pineda", phone: "98543671", present: null },
+                { id: 32, name: "Maria Doris Mejia Murcia", phone: "97346111", present: null },
+                { id: 31, name: "María Fernanda Mejía Claros", phone: "98234790", present: null },
+                { id: 16, name: "Norma Eunice Cruz Alvarado", phone: "33065778", present: null },
+                { id: 33, name: "Pablo Jossimar Rivera Rivera", phone: "33483591", present: null },
+                { id: 22, name: "Sailyn Nahomy Hernandez Ramos", phone: "88010162", present: null },
+                { id: 19, name: "Wendy Sarahi Escobar Argueta", phone: "96108887", present: null },
+                { id: 35, name: "Wilmer Antonio Soliz Padilla", phone: "97073117", present: null }
+            ],
+            proverbios: [
+                { id: 63, name: "Amalia Abigail Salvador Gómez", phone: "99388016", present: null },
+                { id: 49, name: "Caleb Emanuel Muñoz Martinez", phone: "33453060", present: null },
+                { id: 57, name: "Dariel Abigail Castro Villanueva", phone: "93821756", present: null },
+                { id: 55, name: "Elizabeth Carolina Mejía Soler", phone: "83326060", present: null },
+                { id: 58, name: "Erick Alexander Castro Villanueva", phone: "91428504", present: null },
+                { id: 39, name: "Francia Yescas Cáceres", phone: "98270604", present: null },
+                { id: 43, name: "German Jonathan Barrera Pineda", phone: "88556674", present: null },
+                { id: 37, name: "German Josuat Mejía Carranza", phone: "96185372", present: null },
+                { id: 48, name: "Isaias Tábora", phone: "31423491", present: null },
+                { id: 62, name: "Jessin Enai Garcia Lainez", phone: "93817061", present: null },
+                { id: 44, name: "Jose Eli Velasquez Posadas", phone: "31917591", present: null },
+                { id: 56, name: "Katherine Lizehth Mejia Soler", phone: "91423570", present: null },
+                { id: 41, name: "Keila Judith Baide Peña", phone: "93824704", present: null },
+                { id: 61, name: "Kenneth Enai Garcia Enamorado", phone: "96422788", present: null },
+                { id: 47, name: "Madai Tábora", phone: "31423481", present: null },
+                { id: 46, name: "Manuel Josue Lopez Valerio", phone: "33463284", present: null },
+                { id: 50, name: "María Elena Pineda Mejía", phone: "97265187", present: null },
+                { id: 59, name: "Maritza Jeaneth Enamorado Díaz", phone: "98234704", present: null },
+                { id: 65, name: "Marvin Alejandro Hernández Sánchez", phone: "99386654", present: null },
+                { id: 45, name: "Mercedes Santos", phone: "98179931", present: null },
+                { id: 64, name: "Natalia Esmelda Salvador Gómez", phone: "93386015", present: null },
+                { id: 38, name: "Obed Martínez", phone: "92175604", present: null },
+                { id: 54, name: "Obed Isai Calderon Contreras", phone: "89310764", present: null },
+                { id: 36, name: "Olinda Lagos", phone: "33453060", present: null },
+                { id: 53, name: "Pastora Patricia Menjivar Menjivar", phone: "96802641", present: null },
+                { id: 42, name: "Ruth Sarai Muñoz Martínez", phone: "93290284", present: null },
+                { id: 60, name: "Ruth Valeria García Enamorado", phone: "96422870", present: null },
+                { id: 52, name: "Suany Abigail Suazo Cruz", phone: "96436784", present: null },
+                { id: 40, name: "Susana Escobar Fúnez", phone: "93313824", present: null },
+                { id: 51, name: "Victor Abel Hernandez", phone: "97423576", present: null }
+            ],
+            realidades: [
+                { id: 75, name: "Alexis Daniel Hernández Reyes", phone: "87428672", present: null },
+                { id: 73, name: "Ana Yhanci Chávez Avilez", phone: "89669978", present: null },
+                { id: 66, name: "Ariana Abigail Garrido Contreras", phone: "94612967", present: null },
+                { id: 68, name: "Axel Johel Cruz Santos", phone: "94181805", present: null },
+                { id: 70, name: "Bessy Jacqueline Pineda Vásquez", phone: "96414176", present: null },
+                { id: 74, name: "Dayana Noemí Colindres Canales", phone: "31620516", present: null },
+                { id: 67, name: "Gabriela Lizeth Martínez Zúñiga", phone: "95144161", present: null },
+                { id: 76, name: "Glenda Xiomara Licona", phone: "95332677", present: null },
+                { id: 71, name: "Julio Cesar Machado Cardona", phone: "96105870", present: null },
+                { id: 69, name: "Kenci Vanesa Calix", phone: "31167113", present: null },
+                { id: 72, name: "Suany Lisseth Cruz", phone: "96762894", present: null },
+                { id: 77, name: "Yoherin José Martínez Garrido", phone: "95636439", present: null }
+            ],
+            corintios: [
+                { id: 85, name: "Astrid Berenice Calderón Contreras", phone: "98200674", present: null },
+                { id: 90, name: "Daisy Antonia Pineda", phone: "96251735", present: null },
+                { id: 92, name: "Delsy Marisela Rodríguez Velásquez", phone: "31776537", present: null },
+                { id: 84, name: "Emily Abigail Romero Sánchez", phone: "92347581", present: null },
+                { id: 86, name: "Gicela Yadira Hernández Motiño", phone: "92291341", present: null },
+                { id: 81, name: "Gladis Marlene Barralaga Solorzano", phone: "92933239", present: null },
+                { id: 83, name: "Heidy Xiomara Soler Bados", phone: "97477626", present: null },
+                { id: 89, name: "Jimmy Emanuel Santos Ramos", phone: "97528312", present: null },
+                { id: 82, name: "Josué Manuel López Valerio", phone: "96218625", present: null },
+                { id: 79, name: "María Angel Ramos", phone: "98216385", present: null },
+                { id: 78, name: "Nelson Leonel Portillo Araujo", phone: "99106182", present: null },
+                { id: 91, name: "Nelson Javier Martínez Mejía", phone: "99394397", present: null },
+                { id: 88, name: "Sandra Yakeline Rivas Martínez", phone: "93330707", present: null },
+                { id: 87, name: "Stefhanie Paola Sarmiento Escalante", phone: "98681840", present: null },
+                { id: 80, name: "Yolanny Jacqueline Escalante Iazo", phone: "92412466", present: null }
+            ],
+            enviados: [
+                { id: 100, name: "Deisy Patricia Ordóñez Majano", phone: "88506417", present: null },
+                { id: 94, name: "Delmi Xiomara Rivera Rivera", phone: "31494996", present: null },
+                { id: 103, name: "Dunia Yaneth Gómez González", phone: "95868397", present: null },
+                { id: 97, name: "José Delfildo Mejía Lara", phone: "96425974", present: null },
+                { id: 101, name: "Kimberly Soraya Carranza Polanco", phone: "97359574", present: null },
+                { id: 96, name: "Lidia Bonilla Saravia", phone: "93536135", present: null },
+                { id: 95, name: "Lilian Exidia Rodríguez Fajardo", phone: "32939566", present: null },
+                { id: 98, name: "Lilian María Salinas", phone: "96172546", present: null },
+                { id: 102, name: "Marilu Maldonado Martínez", phone: "95829882", present: null },
+                { id: 99, name: "Milton Mauricio Velásques Zúñiga", phone: "96971590", present: null },
+                { id: 93, name: "Nelson Javier Posas Cruz", phone: "32408774", present: null }
+            ]
+        };
+
+        const groupTitles = {
+            madurez: "Madurez Espiritual",
+            prediscipulado: "Pre-Discipulado", 
+            proverbios: "Proverbios de Salomón",
+            realidades: "Realidades de la Cruz",
+            corintios: "Corintios & Gracia",
+            enviados: "Enviados - Misiones"
+        };
+
+        // Initialize cumulative data structure (20 marks per student)
+        let cumulativeData = {};
+        
+        function initializeCumulativeData() {
+            Object.keys(studentGroups).forEach(groupKey => {
+                cumulativeData[groupKey] = {};
+                studentGroups[groupKey].forEach(student => {
+                    cumulativeData[groupKey][student.id] = new Array(20).fill(false);
+                });
+            });
+        }
+
+        // Access control system
+        let userRole = null; // 'docente' or 'admin'
+        let isMainAuthenticated = false;
+        let currentPasswordGroup = null;
+        
+        const MAIN_PASSWORDS = {
+            docente: 'TORREFUERTE',
+            admin: 'ADMIN2024'
+        };
+        
+        function requestMainAccess(role) {
+            const roleNames = {
+                docente: 'DOCENTES',
+                admin: 'ADMINISTRADOR'
+            };
+            
+            // Create custom modal for password input
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50';
+            modal.innerHTML = `
+                <div class="bg-white rounded-2xl p-6 max-w-sm w-full">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-${role === 'admin' ? 'purple' : 'blue'}-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-${role === 'admin' ? 'purple' : 'blue'}-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">ACCESO ${roleNames[role]}</h3>
+                        <p class="text-gray-600 text-sm">Ingresa la contraseña para continuar</p>
+                    </div>
+                    <div class="mb-6">
+                        <input 
+                            type="password" 
+                            id="mainPasswordInput" 
+                            placeholder="Contraseña"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-${role === 'admin' ? 'purple' : 'blue'}-500 focus:border-transparent outline-none"
+                        >
+                        <div id="mainPasswordError" class="text-red-500 text-xs mt-2 hidden">Contraseña incorrecta</div>
+                    </div>
+                    <div class="flex gap-3">
+                        <button 
+                            onclick="checkMainPassword('${role}', this.closest('.fixed'))"
+                            class="flex-1 bg-${role === 'admin' ? 'purple' : 'blue'}-600 text-white py-3 px-4 rounded-lg hover:bg-${role === 'admin' ? 'purple' : 'blue'}-700 transition-colors font-medium"
+                        >
+                            🔓 Ingresar
+                        </button>
+                        <button 
+                            onclick="this.closest('.fixed').remove()"
+                            class="flex-1 bg-gray-200 text-gray-800 py-3 px-4 rounded-lg hover:bg-gray-300 transition-colors font-medium"
+                        >
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            document.getElementById('mainPasswordInput').focus();
+            
+            // Handle Enter key
+            document.getElementById('mainPasswordInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkMainPassword(role, modal);
+                }
+            });
+        }
+        
+        function checkMainPassword(role, modal) {
+            const input = document.getElementById('mainPasswordInput');
+            const error = document.getElementById('mainPasswordError');
+            const password = input.value;
+            
+            if (password === MAIN_PASSWORDS[role]) {
+                userRole = role;
+                isMainAuthenticated = true;
+                
+                // Remove modal
+                modal.remove();
+                
+                // Force TORRE FUERTE room for all users
+                localStorage.setItem('torreRoomId', 'TORREFUERTE');
+                
+                // Initialize the app first
+                init();
+                
+                if (role === 'admin') {
+                    // Admins get access to all groups immediately
+                    authenticatedGroups = new Set(Object.keys(studentGroups));
+                    
+                    // Show main app directly
+                    document.getElementById('mainMenu').style.display = 'none';
+                    document.getElementById('groupSelectionMenu').style.display = 'none';
+                    document.getElementById('appContent').style.display = 'block';
+                    
+                    switchGroup('madurez');
+                    showConnectionStatus('✅ Acceso ADMINISTRADOR completo - Sala: TORRE FUERTE', 'green');
+                } else {
+                    // Teachers need to select a group first
+                    showGroupSelectionMenu();
+                    showConnectionStatus('✅ Acceso DOCENTES - Selecciona tu grupo', 'blue');
+                }
+            } else {
+                error.classList.remove('hidden');
+                error.textContent = 'Contraseña incorrecta';
+                input.value = '';
+                input.focus();
+            }
+        }
+        
+        function requestGroupAccess(groupName) {
+            if (userRole === 'admin' || authenticatedGroups.has(groupName)) {
+                // Admin or already authenticated for this group
+                switchGroup(groupName);
+            } else {
+                // Teacher needs to authenticate for this specific group
+                currentPasswordGroup = groupName;
+                document.getElementById('passwordPrompt').textContent = `Ingresa la contraseña para ${groupTitles[groupName]}`;
+                document.getElementById('passwordModal').style.display = 'flex';
+                document.getElementById('passwordInput').focus();
+            }
+        }
+        
+        function checkPassword() {
+            const input = document.getElementById('passwordInput');
+            const error = document.getElementById('passwordError');
+            
+            if (currentPasswordGroup && input.value === GROUP_PASSWORDS[currentPasswordGroup]) {
+                authenticatedGroups.add(currentPasswordGroup);
+                document.getElementById('passwordModal').style.display = 'none';
+                error.classList.add('hidden');
+                
+                // Hide group selection menu and show main app
+                document.getElementById('groupSelectionMenu').style.display = 'none';
+                document.getElementById('appContent').style.display = 'block';
+                
+                if (!isAuthenticated) {
+                    isAuthenticated = true;
+                }
+                
+                switchGroup(currentPasswordGroup);
+                currentPasswordGroup = null;
+            } else {
+                error.classList.remove('hidden');
+                error.textContent = 'Contraseña incorrecta para este grupo';
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        function handlePasswordKeyPress(event) {
+            if (event.key === 'Enter') {
+                checkPassword();
+            }
+        }
+
+        function cancelPasswordModal() {
+            document.getElementById('passwordModal').style.display = 'none';
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordError').classList.add('hidden');
+            currentPasswordGroup = null;
+            
+            // If user is a teacher, go back to group selection
+            if (userRole === 'docente') {
+                showGroupSelectionMenu();
+            }
+        }
+
+        // Main view switching
+        function switchMainView(view) {
+            currentView = view;
+            
+            // Update navigation buttons
+            document.querySelectorAll('.main-nav').forEach(nav => {
+                nav.classList.remove('active');
+            });
+            document.getElementById(`nav-${view}`).classList.add('active');
+            
+            // Show/hide views
+            if (view === 'attendance') {
+                document.getElementById('attendanceView').classList.remove('hidden');
+                document.getElementById('cumulativeView').classList.add('hidden');
+            } else if (view === 'cumulative') {
+                document.getElementById('attendanceView').classList.add('hidden');
+                document.getElementById('cumulativeView').classList.remove('hidden');
+                renderCumulativeChart();
+            }
+        }
+
+        // Initialize the app
+        function init() {
+            updateCurrentDate();
+            initializeCumulativeData();
+            loadFromStorage();
+            
+            // Initialize real-time sync
+            initRealTimeSync();
+            
+            switchMainView('attendance');
+        }
+
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-ES', options);
+        }
+
+        function switchGroup(groupName) {
+            // Check if user has access to this group
+            if (userRole !== 'admin' && !authenticatedGroups.has(groupName)) {
+                requestGroupAccess(groupName);
+                return;
+            }
+            
+            currentGroup = groupName;
+            
+            // Update tab styles
+            document.querySelectorAll('.group-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById(`tab-${groupName}`).classList.add('active');
+            
+            renderStudentsList();
+            updateStats();
+        }
+
+        function toggleAttendance(studentId) {
+            const groups = Object.values(studentGroups);
+            for (let group of groups) {
+                const student = group.find(s => s.id === studentId);
+                if (student) {
+                    if (student.present === null) {
+                        student.present = true;
+                    } else if (student.present === true) {
+                        student.present = false;
+                    } else {
+                        student.present = null;
+                    }
+                    break;
+                }
+            }
+            
+            renderStudentsList();
+            updateStats();
+            saveToStorage();
+        }
+
+        function renderStudentsList() {
+            const container = document.getElementById('studentsList');
+            const students = studentGroups[currentGroup];
+            const groupTitle = document.getElementById('groupTitle');
+            const groupProgress = document.getElementById('groupProgress');
+            
+            const present = students.filter(s => s.present === true).length;
+            groupTitle.textContent = `${groupTitles[currentGroup]} (${students.length})`;
+            groupProgress.textContent = `${present}/${students.length}`;
+            
+            container.innerHTML = students.map((student, index) => {
+                let statusClass = 'bg-gray-100 text-gray-600';
+                let statusIcon = '⚪';
+                let statusText = 'Sin marcar';
+                
+                if (student.present === true) {
+                    statusClass = 'bg-green-100 text-green-700';
+                    statusIcon = '✅';
+                    statusText = 'Presente';
+                } else if (student.present === false) {
+                    statusClass = 'bg-red-100 text-red-700';
+                    statusIcon = '❌';
+                    statusText = 'Ausente';
+                }
+                
+                return `
+                    <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-gray-100 shadow-sm slide-in">
+                        <div class="flex items-center gap-3 flex-1 min-w-0">
+                            <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-xs flex-shrink-0">
+                                ${index + 1}
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="font-medium text-gray-900 text-sm truncate">${student.name}</div>
+                                <div class="text-xs text-gray-500">${student.phone}</div>
+                                <div class="text-xs ${statusClass.split(' ')[1]} font-medium">
+                                    ${statusIcon} ${statusText}
+                                </div>
+                            </div>
+                        </div>
+                        <button 
+                            onclick="toggleAttendance(${student.id})"
+                            class="w-12 h-12 ${statusClass} rounded-xl hover:scale-105 transition-all duration-200 flex items-center justify-center font-bold flex-shrink-0 ml-2"
+                        >
+                            ${statusIcon}
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateStats() {
+            const allStudents = Object.values(studentGroups).flat();
+            const currentStudents = studentGroups[currentGroup];
+            
+            const present = currentStudents.filter(s => s.present === true).length;
+            const absent = currentStudents.filter(s => s.present === false).length;
+            const total = currentStudents.length;
+            const percentage = total > 0 ? Math.round((present / total) * 100) : 0;
+            
+            document.getElementById('presentCount').textContent = present;
+            document.getElementById('absentCount').textContent = absent;
+            document.getElementById('totalCount').textContent = total;
+            document.getElementById('percentageCount').textContent = `${percentage}%`;
+            document.getElementById('attendanceCount').textContent = `${present} presentes`;
+        }
+
+        function markAllPresent() {
+            studentGroups[currentGroup].forEach(student => student.present = true);
+            renderStudentsList();
+            updateStats();
+            saveToStorage();
+        }
+
+        function markAllAbsent() {
+            studentGroups[currentGroup].forEach(student => student.present = false);
+            renderStudentsList();
+            updateStats();
+            saveToStorage();
+        }
+
+        function resetAttendance() {
+            if (confirm('¿Estás seguro de que quieres resetear la asistencia de este grupo?')) {
+                studentGroups[currentGroup].forEach(student => student.present = null);
+                renderStudentsList();
+                updateStats();
+                saveToStorage();
+            }
+        }
+
+        function exportAttendance() {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('es-ES');
+            const timeStr = now.toLocaleTimeString('es-ES');
+            
+            let content = `REPORTE DE ASISTENCIA - DISCIPULADO TORRE FUERTE\n`;
+            content += `Fecha: ${dateStr}\n`;
+            content += `Hora: ${timeStr}\n\n`;
+            
+            // Export all groups
+            Object.keys(studentGroups).forEach(groupKey => {
+                const students = studentGroups[groupKey];
+                const present = students.filter(s => s.present === true).length;
+                const absent = students.filter(s => s.present === false).length;
+                const unmarked = students.filter(s => s.present === null).length;
+                
+                content += `=== ${groupTitles[groupKey].toUpperCase()} ===\n`;
+                content += `Total: ${students.length} | Presentes: ${present} | Ausentes: ${absent} | Sin marcar: ${unmarked}\n\n`;
+                
+                students.forEach((student, index) => {
+                    let status = 'Sin marcar';
+                    if (student.present === true) status = 'Presente';
+                    if (student.present === false) status = 'Ausente';
+                    content += `${index + 1}. ${student.name} - ${student.phone} - ${status}\n`;
+                });
+                content += `\n`;
+            });
+            
+            // Overall summary
+            const allStudents = Object.values(studentGroups).flat();
+            const totalPresent = allStudents.filter(s => s.present === true).length;
+            const totalAbsent = allStudents.filter(s => s.present === false).length;
+            const totalUnmarked = allStudents.filter(s => s.present === null).length;
+            
+            content += `=== RESUMEN GENERAL ===\n`;
+            content += `Total estudiantes: ${allStudents.length}\n`;
+            content += `Total presentes: ${totalPresent}\n`;
+            content += `Total ausentes: ${totalAbsent}\n`;
+            content += `Sin marcar: ${totalUnmarked}\n`;
+            content += `Porcentaje asistencia: ${allStudents.length > 0 ? Math.round((totalPresent / allStudents.length) * 100) : 0}%\n`;
+            
+            document.getElementById('exportContent').textContent = content;
+            document.getElementById('exportModal').classList.remove('hidden');
+            document.getElementById('exportModal').classList.add('flex');
+        }
+
+        function copyToClipboard() {
+            const content = document.getElementById('exportContent').textContent;
+            navigator.clipboard.writeText(content).then(() => {
+                alert('¡Reporte copiado al portapapeles!');
+                closeExportModal();
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = content;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('¡Reporte copiado al portapapeles!');
+                closeExportModal();
+            });
+        }
+
+        function closeExportModal() {
+            document.getElementById('exportModal').classList.add('hidden');
+            document.getElementById('exportModal').classList.remove('flex');
+        }
+
+        // Cumulative chart functions
+        function switchCumulativeGroup(groupName) {
+            // Check if user has access to this group
+            if (userRole !== 'admin' && !authenticatedGroups.has(groupName)) {
+                requestGroupAccess(groupName);
+                return;
+            }
+            
+            currentCumulativeGroup = groupName;
+            
+            // Update tab styles
+            document.querySelectorAll('.cumulative-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById(`cum-tab-${groupName}`).classList.add('active');
+            
+            renderCumulativeChart();
+        }
+
+        function renderCumulativeChart() {
+            const container = document.getElementById('cumulativeChart');
+            const students = studentGroups[currentCumulativeGroup];
+            const groupTitle = document.getElementById('cumulativeGroupTitle');
+            
+            groupTitle.textContent = `Cuadro Acumulativo - ${groupTitles[currentCumulativeGroup]}`;
+            
+            let html = `
+                <div class="p-4">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-xs">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="text-left p-2 font-medium text-gray-700 min-w-[150px]">Estudiante</th>
+                                    ${Array.from({length: 20}, (_, i) => `<th class="text-center p-1 font-medium text-gray-700">${i + 1}</th>`).join('')}
+                                    <th class="text-center p-2 font-medium text-gray-700 min-w-[60px]">%</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+            `;
+            
+            students.forEach((student, studentIndex) => {
+                const studentData = cumulativeData[currentCumulativeGroup][student.id] || new Array(20).fill(false);
+                const completedCount = studentData.filter(mark => mark).length;
+                const percentage = Math.round((completedCount / 20) * 100);
+                
+                html += `
+                    <tr class="border-b border-gray-100 ${studentIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50'}">
+                        <td class="p-2 font-medium text-gray-900 truncate max-w-[150px]" title="${student.name}">
+                            ${student.name}
+                        </td>
+                `;
+                
+                // Add 20 mark cells
+                for (let i = 0; i < 20; i++) {
+                    const isMarked = studentData[i];
+                    html += `
+                        <td class="p-1 text-center">
+                            <div 
+                                class="cumulative-cell ${isMarked ? 'marked' : 'unmarked'} rounded flex items-center justify-center text-xs font-bold mx-auto"
+                                onclick="toggleCumulativeMark(${student.id}, ${i})"
+                            >
+                                ${isMarked ? '✓' : ''}
+                            </div>
+                        </td>
+                    `;
+                }
+                
+                // Add percentage cell
+                html += `
+                        <td class="p-2 text-center font-bold ${percentage >= 80 ? 'text-green-600' : percentage >= 60 ? 'text-yellow-600' : 'text-red-600'}">
+                            ${percentage}%
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            html += `
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-4 text-xs text-gray-500 text-center">
+                        Toca las casillas para marcar/desmarcar el cumplimiento
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+
+        function toggleCumulativeMark(studentId, markIndex) {
+            if (!cumulativeData[currentCumulativeGroup][studentId]) {
+                cumulativeData[currentCumulativeGroup][studentId] = new Array(20).fill(false);
+            }
+            
+            cumulativeData[currentCumulativeGroup][studentId][markIndex] = !cumulativeData[currentCumulativeGroup][studentId][markIndex];
+            renderCumulativeChart();
+            saveCumulativeToStorage();
+        }
+
+        function saveToStorage() {
+            const roomId = localStorage.getItem('torreRoomId') || 'TORREFUERTE';
+            
+            // Save local data
+            const localData = {
+                ...studentGroups,
+                lastUpdated: new Date().toISOString(),
+                roomId: roomId
+            };
+            localStorage.setItem('attendanceDataTorre', JSON.stringify(localData));
+            
+            // Sync data to shared storage
+            syncData();
+        }
+
+        function saveCumulativeToStorage() {
+            const roomId = localStorage.getItem('torreRoomId') || 'TORREFUERTE';
+            
+            // Save local cumulative data
+            const localData = {
+                ...cumulativeData,
+                lastUpdated: new Date().toISOString(),
+                roomId: roomId
+            };
+            localStorage.setItem('cumulativeDataTorre', JSON.stringify(localData));
+            
+            // Sync data to shared storage
+            syncData();
+        }
+
+        function loadFromStorage() {
+            // Load attendance data
+            const saved = localStorage.getItem('attendanceDataTorre');
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    // Merge saved data with default structure
+                    Object.keys(studentGroups).forEach(groupKey => {
+                        if (data[groupKey]) {
+                            studentGroups[groupKey].forEach((student, index) => {
+                                if (data[groupKey][index] && data[groupKey][index].id === student.id) {
+                                    student.present = data[groupKey][index].present;
+                                }
+                            });
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error loading attendance data:', error);
+                }
+            }
+
+            // Load cumulative data
+            const savedCumulative = localStorage.getItem('cumulativeDataTorre');
+            if (savedCumulative) {
+                try {
+                    const data = JSON.parse(savedCumulative);
+                    Object.keys(cumulativeData).forEach(groupKey => {
+                        if (data[groupKey]) {
+                            Object.keys(cumulativeData[groupKey]).forEach(studentId => {
+                                if (data[groupKey][studentId]) {
+                                    cumulativeData[groupKey][studentId] = data[groupKey][studentId];
+                                }
+                            });
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error loading cumulative data:', error);
+                }
+            }
+        }
+
+        // Real-time sync functionality
+        let syncChannel = null;
+        let isOnline = navigator.onLine;
+        let syncInterval = null;
+        let lastSyncTime = 0;
+        
+        function initRealTimeSync() {
+            // Always use TORRE FUERTE room for all users
+            const roomId = 'TORREFUERTE';
+            localStorage.setItem('torreRoomId', roomId);
+            
+            // Show room ID to user
+            showRoomInfo(roomId);
+            
+            // Listen for storage changes from other tabs/devices
+            window.addEventListener('storage', handleStorageChange);
+            
+            // Set up periodic sync check
+            syncInterval = setInterval(checkForUpdates, 3000);
+            
+            // Check online status
+            window.addEventListener('online', () => {
+                isOnline = true;
+                showConnectionStatus('✅ Conectado - Sincronización activa', 'green');
+                // Force sync when coming back online
+                setTimeout(() => syncData(), 1000);
+            });
+            
+            window.addEventListener('offline', () => {
+                isOnline = false;
+                showConnectionStatus('⚠️ Sin conexión - Datos guardados localmente', 'orange');
+            });
+            
+            // Initial connection status
+            showConnectionStatus('✅ Listo para sincronizar - Sala: TORRE FUERTE', 'green');
+            
+            // Load any existing shared data
+            setTimeout(() => loadSharedRoomData('TORREFUERTE'), 500);
+        }
+        
+        function generateRoomId() {
+            return 'TORREFUERTE';
+        }
+        
+        function showRoomInfo(roomId) {
+            const header = document.querySelector('.bg-gradient-to-r');
+            const roomInfo = document.createElement('div');
+            roomInfo.className = 'mt-2 text-xs bg-white/20 rounded-lg p-2 flex items-center justify-center';
+            roomInfo.innerHTML = `
+                <span>🏠 Sala Compartida: <strong>${roomId}</strong> - Sincronización Automática</span>
+            `;
+            header.appendChild(roomInfo);
+        }
+        
+        function showConnectionStatus(message, color) {
+            let statusDiv = document.getElementById('connectionStatus');
+            if (!statusDiv) {
+                statusDiv = document.createElement('div');
+                statusDiv.id = 'connectionStatus';
+                statusDiv.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-lg text-xs font-medium z-50 transition-all duration-300';
+                document.body.appendChild(statusDiv);
+            }
+            
+            statusDiv.textContent = message;
+            statusDiv.className = `fixed top-4 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-lg text-xs font-medium z-50 transition-all duration-300 ${
+                color === 'green' ? 'bg-green-500 text-white' : 
+                color === 'orange' ? 'bg-orange-500 text-white' : 
+                color === 'blue' ? 'bg-blue-500 text-white' :
+                'bg-gray-500 text-white'
+            }`;
+            
+            // Auto hide after 4 seconds
+            setTimeout(() => {
+                if (statusDiv) {
+                    statusDiv.style.opacity = '0';
+                    setTimeout(() => statusDiv.remove(), 300);
+                }
+            }, 4000);
+        }
+        
+        function shareRoom() {
+            const currentUrl = window.location.href;
+            const shareText = `🏛️ DISCIPULADO TORRE FUERTE - Sistema de Asistencia\n\n📱 Acceso directo:\n${currentUrl}\n\n🔐 Todos los usuarios se conectan automáticamente a la sala compartida TORRE FUERTE para sincronización en tiempo real.\n\n✅ Los cambios de asistencia se sincronizan automáticamente entre todos los dispositivos conectados.`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Discipulado TORRE FUERTE - Sistema de Asistencia',
+                    text: shareText
+                }).then(() => {
+                    showConnectionStatus('📤 Sistema compartido exitosamente', 'green');
+                }).catch(() => {
+                    copyShareText(shareText);
+                });
+            } else {
+                copyShareText(shareText);
+            }
+        }
+        
+        function copyShareText(shareText) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(shareText).then(() => {
+                    showConnectionStatus('📋 Información de sala copiada al portapapeles', 'green');
+                }).catch(() => {
+                    fallbackCopy(shareText);
+                });
+            } else {
+                fallbackCopy(shareText);
+            }
+        }
+        
+        function fallbackCopy(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showConnectionStatus('📋 Información del sistema copiada', 'green');
+            } catch (err) {
+                alert(`🏛️ DISCIPULADO TORRE FUERTE\n\n📱 Sistema de Asistencia con Sincronización Automática\n\n🔗 URL: ${window.location.href}\n\n✅ Todos los usuarios se conectan automáticamente a la sala compartida TORRE FUERTE.`);
+            }
+            
+            document.body.removeChild(textArea);
+        }
+        
+        // Room is fixed to TORRE FUERTE - no manual joining needed
+        function joinRoom() {
+            // This function is no longer needed as all users automatically join TORRE FUERTE
+            showConnectionStatus('🏠 Ya estás conectado a la sala TORRE FUERTE', 'green');
+        }
+        
+        function loadSharedRoomData(roomId) {
+            // Try to load data that might be shared for this room
+            const sharedKey = `sharedRoom_${roomId}`;
+            const sharedData = localStorage.getItem(sharedKey);
+            
+            if (sharedData) {
+                try {
+                    const data = JSON.parse(sharedData);
+                    let hasUpdates = false;
+                    
+                    // Load attendance data
+                    if (data.attendance) {
+                        Object.keys(studentGroups).forEach(groupKey => {
+                            if (data.attendance[groupKey]) {
+                                studentGroups[groupKey].forEach((student, index) => {
+                                    if (data.attendance[groupKey][index] && data.attendance[groupKey][index].id === student.id) {
+                                        if (student.present !== data.attendance[groupKey][index].present) {
+                                            student.present = data.attendance[groupKey][index].present;
+                                            hasUpdates = true;
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    
+                    // Load cumulative data
+                    if (data.cumulative) {
+                        Object.keys(cumulativeData).forEach(groupKey => {
+                            if (data.cumulative[groupKey]) {
+                                Object.keys(cumulativeData[groupKey]).forEach(studentId => {
+                                    if (data.cumulative[groupKey][studentId]) {
+                                        const currentData = JSON.stringify(cumulativeData[groupKey][studentId]);
+                                        const newData = JSON.stringify(data.cumulative[groupKey][studentId]);
+                                        if (currentData !== newData) {
+                                            cumulativeData[groupKey][studentId] = data.cumulative[groupKey][studentId];
+                                            hasUpdates = true;
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    
+                    // Only refresh UI if there were actual updates
+                    if (hasUpdates) {
+                        renderStudentsList();
+                        updateStats();
+                        if (currentView === 'cumulative') {
+                            renderCumulativeChart();
+                        }
+                        showConnectionStatus('🔄 Datos sincronizados', 'green');
+                    }
+                    
+                    // Update last sync time
+                    lastSyncTime = data.timestamp || Date.now();
+                    
+                } catch (error) {
+                    console.error('Error loading shared room data:', error);
+                }
+            }
+        }
+        
+        function syncData() {
+            const roomId = 'TORREFUERTE'; // Always use TORRE FUERTE
+            const timestamp = Date.now();
+            
+            // Create shared data object
+            const sharedData = {
+                attendance: studentGroups,
+                cumulative: cumulativeData,
+                timestamp: timestamp,
+                lastUpdated: new Date().toISOString(),
+                deviceId: getDeviceId()
+            };
+            
+            // Save to shared storage
+            const sharedKey = `sharedRoom_${roomId}`;
+            localStorage.setItem(sharedKey, JSON.stringify(sharedData));
+            
+            // Update last sync time
+            lastSyncTime = timestamp;
+        }
+        
+        function getDeviceId() {
+            let deviceId = localStorage.getItem('deviceId');
+            if (!deviceId) {
+                deviceId = 'device_' + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem('deviceId', deviceId);
+            }
+            return deviceId;
+        }
+        
+        function checkForUpdates() {
+            const roomId = 'TORREFUERTE'; // Always use TORRE FUERTE
+            const sharedKey = `sharedRoom_${roomId}`;
+            
+            // Check if there are updates from other devices
+            const sharedData = localStorage.getItem(sharedKey);
+            if (sharedData) {
+                try {
+                    const data = JSON.parse(sharedData);
+                    // Only load if the data is newer than our last sync and from a different device
+                    if (data.timestamp && data.timestamp > lastSyncTime && data.deviceId !== getDeviceId()) {
+                        loadSharedRoomData(roomId);
+                    }
+                } catch (error) {
+                    console.error('Error checking for updates:', error);
+                }
+            }
+        }
+        
+        function handleStorageChange(e) {
+            const roomId = 'TORREFUERTE'; // Always use TORRE FUERTE
+            const sharedKey = `sharedRoom_${roomId}`;
+            
+            if (e.key === sharedKey && e.newValue) {
+                try {
+                    const data = JSON.parse(e.newValue);
+                    
+                    // Only process if it's from a different device and newer
+                    if (data.deviceId !== getDeviceId() && data.timestamp > lastSyncTime) {
+                        loadSharedRoomData(roomId);
+                    }
+                } catch (error) {
+                    console.error('Error handling storage change:', error);
+                }
+            }
+        }
+
+        // Group selection functions
+        function showGroupSelectionMenu() {
+            document.getElementById('mainMenu').style.display = 'none';
+            document.getElementById('groupSelectionMenu').style.display = 'block';
+            document.getElementById('appContent').style.display = 'none';
+        }
+        
+        function selectTeacherGroup(groupName) {
+            // Request access to the selected group
+            requestGroupAccess(groupName);
+        }
+        
+        function backToMainMenu() {
+            // Reset authentication state
+            isMainAuthenticated = false;
+            userRole = null;
+            authenticatedGroups.clear();
+            
+            // Show main menu
+            document.getElementById('mainMenu').style.display = 'flex';
+            document.getElementById('groupSelectionMenu').style.display = 'none';
+            document.getElementById('appContent').style.display = 'none';
+            
+            showConnectionStatus('🔓 Sesión cerrada', 'gray');
+        }
+
+        // Initialize the app when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Always show main menu first - reset any previous state
+            document.getElementById('mainMenu').style.display = 'flex';
+            document.getElementById('groupSelectionMenu').style.display = 'none';
+            document.getElementById('appContent').style.display = 'none';
+            
+            // Reset authentication state
+            isMainAuthenticated = false;
+            userRole = null;
+            authenticatedGroups.clear();
+            
+            // Clear any modal states
+            document.getElementById('passwordModal').style.display = 'none';
+            document.getElementById('exportModal').classList.add('hidden');
+            document.getElementById('exportModal').classList.remove('flex');
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96703e3a21baa510',t:'MTc1MzgzMDEzOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
+"Sistema de Asistencia Discipulado Torre Fuerte"
